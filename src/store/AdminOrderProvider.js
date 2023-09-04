@@ -27,7 +27,7 @@ const AdminOrderProvider = (props) => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/admin/get-all-order",
+        "https://amanone-backend-app.vercel.app/admin/get-all-order",
         {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -49,7 +49,7 @@ const AdminOrderProvider = (props) => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/admin/single-order-admin/" + id,
+        "https://amanone-backend-app.vercel.app/admin/single-order-admin/" + id,
         {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -70,7 +70,7 @@ const AdminOrderProvider = (props) => {
   const updateStatusPengiriman = async (id, status) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/admin/kirim-barang/" + id,
+        "https://amanone-backend-app.vercel.app/admin/kirim-barang/" + id,
         {
           method: "PUT",
           headers: {

@@ -12,11 +12,14 @@ const DashboardMenu = (props) => {
   const authCtx = useContext(AuthContext);
 
   const getUser = async () => {
-    const response = await fetch("http://localhost:8080/admin/get-all-user", {
-      headers: {
-        Authorization: `Bearer ${props.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://amanone-backend-app.vercel.app/admin/get-all-user",
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    );
     const data = await response.json();
     setUserList(data.userList);
   };

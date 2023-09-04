@@ -23,7 +23,7 @@ const ProductMenu = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/product/single-product/${prodId}`
+        `https://amanone-backend-app.vercel.app/product/single-product/${prodId}`
       );
       if (response.status !== 200) {
         return;

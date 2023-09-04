@@ -281,8 +281,8 @@ const AddProductForm = (props) => {
       // EDIT PRODUCT
       if (isValid) {
         const urlEndPoint = isEditing
-          ? `http://localhost:8080/admin/edit-product/${props.params}`
-          : "http://localhost:8080/admin/add-product";
+          ? `https://amanone-backend-app.vercel.app/admin/edit-product/${props.params}`
+          : "https://amanone-backend-app.vercel.app/admin/add-product";
 
         const method = !isEditing ? "POST" : "PUT";
 

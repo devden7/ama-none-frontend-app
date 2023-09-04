@@ -19,7 +19,7 @@ const EditProductPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/product/edit-product/" + Id
+        "https://amanone-backend-app.vercel.app/product/edit-product/" + Id
       );
       if (response.status !== 200) {
         return;

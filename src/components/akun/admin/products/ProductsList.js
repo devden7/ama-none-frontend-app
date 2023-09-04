@@ -7,7 +7,7 @@ const ProductsList = (props) => {
     if (window.confirm("Hapus Product?")) {
       try {
         const response = await fetch(
-          `http://localhost:8080/admin/delete-product/${prodId}`,
+          `https://amanone-backend-app.vercel.app/admin/delete-product/${prodId}`,
           {
             method: "DELETE",
             headers: {

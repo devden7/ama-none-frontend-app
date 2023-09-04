@@ -140,13 +140,16 @@ const DaftarForm = () => {
         role: "users",
       };
 
-      const response = await fetch("http://localhost:8080/admin/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/JSON",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        "https://amanone-backend-app.vercel.app/admin/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/JSON",
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       const data = await response.json();
 

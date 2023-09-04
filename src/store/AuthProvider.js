@@ -20,13 +20,16 @@ const AuthProvider = (props) => {
   const loginHandler = async (e, dataLogin) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8080/admin/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/JSON",
-      },
-      body: JSON.stringify(dataLogin),
-    });
+    const response = await fetch(
+      "https://amanone-backend-app.vercel.app/admin/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/JSON",
+        },
+        body: JSON.stringify(dataLogin),
+      }
+    );
 
     const data = await response.json();
 
@@ -62,7 +65,7 @@ const AuthProvider = (props) => {
   const gantiPassword = async (dataAkun) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/admin/ganti-password",
+        "https://amanone-backend-app.vercel.app/admin/ganti-password",
         {
           method: "PUT",
           headers: {

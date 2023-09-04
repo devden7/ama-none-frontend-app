@@ -8,7 +8,7 @@ const KategoriNav = () => {
   const takeKategori = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/product/list-kategori"
+        "https://amanone-backend-app.vercel.app/product/list-kategori"
       );
       const data = await response.json();
       setListKategori(data.kategori);

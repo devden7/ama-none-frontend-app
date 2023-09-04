@@ -25,19 +25,22 @@ const OrderDetail = () => {
     const satukanKalender = tanggal + "-" + bulan + "-" + tahun;
     console.log(id);
     try {
-      const response = await fetch("http://localhost:8080/kirim-review/" + id, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: authCtx.userId,
-          userName: authCtx.userName,
-          rating: rating,
-          review: review,
-          tanggal: satukanKalender,
-        }),
-      });
+      const response = await fetch(
+        "https://amanone-backend-app.vercel.app/kirim-review/" + id,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: authCtx.userId,
+            userName: authCtx.userName,
+            rating: rating,
+            review: review,
+            tanggal: satukanKalender,
+          }),
+        }
+      );
       if (response.status !== 201) {
         return;
       }

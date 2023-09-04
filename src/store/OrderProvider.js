@@ -21,11 +21,14 @@ const OrderProvider = (props) => {
   const getOrder = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8080/get-order", {
-        headers: {
-          Authorization: `Bearer ${tokenUser}`,
-        },
-      });
+      const response = await fetch(
+        "https://amanone-backend-app.vercel.app/get-order",
+        {
+          headers: {
+            Authorization: `Bearer ${tokenUser}`,
+          },
+        }
+      );
       const data = await response.json();
 
       if (response.status !== 200) {
@@ -48,7 +51,7 @@ const OrderProvider = (props) => {
       setLoading(null);
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/get-single-order/" + orderId,
+        "https://amanone-backend-app.vercel.app/get-single-order/" + orderId,
         {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -72,7 +75,7 @@ const OrderProvider = (props) => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/get-review/" + orderId
+        "https://amanone-backend-app.vercel.app/get-review/" + orderId
       );
       if (response.status !== 200) {
         return;
@@ -87,14 +90,17 @@ const OrderProvider = (props) => {
   };
   const addOrder = async (order) => {
     try {
-      const response = await fetch("http://localhost:8080/order-product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenUser}`,
-        },
-        body: JSON.stringify(order),
-      });
+      const response = await fetch(
+        "https://amanone-backend-app.vercel.app/order-product",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${tokenUser}`,
+          },
+          body: JSON.stringify(order),
+        }
+      );
       if (response.status !== 201) {
         return;
       }

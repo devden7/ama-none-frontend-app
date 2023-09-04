@@ -21,11 +21,14 @@ const CartProvider = (props) => {
   const takeDataCart = async () => {
     if (!authCtx.isAdmin) {
       try {
-        const response = await fetch("http://localhost:8080/get-cart", {
-          headers: {
-            Authorization: `Bearer ${tokenUser}`,
-          },
-        });
+        const response = await fetch(
+          "https://amanone-backend-app.vercel.app/get-cart",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenUser}`,
+            },
+          }
+        );
 
         const data = await response.json();
         if (response.status !== 200) {
@@ -55,14 +58,17 @@ const CartProvider = (props) => {
 
   const addItemToCart = async (item) => {
     try {
-      const response = await fetch("http://localhost:8080/add-cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenUser}`,
-        },
-        body: JSON.stringify(item),
-      });
+      const response = await fetch(
+        "https://amanone-backend-app.vercel.app/add-cart",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${tokenUser}`,
+          },
+          body: JSON.stringify(item),
+        }
+      );
       if (response.status !== 201) {
         return;
       }
@@ -75,7 +81,7 @@ const CartProvider = (props) => {
   const kurangItemFromCart = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/reduce-quantity/${id}`,
+        `https://amanone-backend-app.vercel.app/reduce-quantity/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -92,9 +98,12 @@ const CartProvider = (props) => {
 
   const hapusItem = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/delete-cart/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://amanone-backend-app.vercel.app/delete-cart/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.status !== 201) {
         return;
       }

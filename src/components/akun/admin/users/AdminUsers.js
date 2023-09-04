@@ -8,11 +8,14 @@ const AdminUsers = (props) => {
   const [loading, setLoading] = useState(null);
   const getUser = async () => {
     setLoading(true);
-    const response = await fetch("http://localhost:8080/admin/get-all-user", {
-      headers: {
-        Authorization: `Bearer ${props.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://amanone-backend-app.vercel.app/admin/get-all-user",
+      {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      }
+    );
     if (response.status !== 200) {
       return;
     }
@@ -27,7 +30,7 @@ const AdminUsers = (props) => {
 
   const deleteUserHandler = async (id) => {
     const response = await fetch(
-      "http://localhost:8080/admin/delete-user/" + id,
+      "https://amanone-backend-app.vercel.app/admin/delete-user/" + id,
       {
         method: "DELETE",
         headers: {

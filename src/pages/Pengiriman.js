@@ -1,4 +1,4 @@
-import { useContext, useEffect, useHistory } from "react";
+import { useContext, useEffect } from "react";
 
 import PengirimanMenu from "../components/transaksi/PengirimanMenu";
 import AuthContext from "../store/auth-context";

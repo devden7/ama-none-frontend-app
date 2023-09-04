@@ -17,7 +17,7 @@ const MainHome = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://ama-none-backend-app.vercel.app/product"
+        "https://amanone-backend-app.vercel.app/product"
       );
       const data = await response.json();
       if (response.status !== 200) {

@@ -27,7 +27,7 @@ const KategoriProduct = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/search?kategori=${
+        `https://amanone-backend-app.vercel.app/search?kategori=${
           ambilKategoriValue === null ? "semua" : ambilKategoriValue
         }&keyword=${
           ambilKeywordQuery === null ? "semua" : ambilKeywordQuery
@@ -53,7 +53,7 @@ const KategoriProduct = () => {
   const takeKategori = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/product/list-kategori"
+        "https://amanone-backend-app.vercel.app/product/list-kategori"
       );
       const data = await response.json();
       if (response.status !== 200) {

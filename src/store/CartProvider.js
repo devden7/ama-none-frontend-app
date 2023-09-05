@@ -15,7 +15,7 @@ const CartProvider = (props) => {
 
   useEffect(() => {
     token();
-  }, [authCtx.isAuth]);
+  }, [authCtx.isAuth, authCtx.token]);
 
   const takeDataCart = async () => {
     if (!authCtx.isAdmin && authCtx.isAuth) {
@@ -30,6 +30,7 @@ const CartProvider = (props) => {
         );
 
         const data = await response.json();
+
         if (response.status !== 200) {
           console.log(data.message);
           return;
@@ -53,7 +54,7 @@ const CartProvider = (props) => {
     if (tokenUser !== null) {
       takeDataCart();
     }
-  }, [tokenUser, authCtx.isAuth]);
+  }, [tokenUser, authCtx.token]);
 
   const addItemToCart = async (item) => {
     try {

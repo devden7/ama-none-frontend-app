@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import AuthContext from "./auth-context";
@@ -10,6 +10,7 @@ const AuthProvider = (props) => {
   const [token, setToken] = useState(null);
   const [isAuth, setIsAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
+  const [role, setRole] = useState(null);
   const [errorMassage, setErrorMessage] = useState("");
   const [httpStatus, setHttpStatus] = useState();
   const [newPasswordErrorMsg, setNewPasswordErrorMsg] = useState("");
@@ -41,22 +42,46 @@ const AuthProvider = (props) => {
       setErrorMessage(data.message);
     }
 
-    setToken(data.detailInfo.token);
-    setUserId(data.detailInfo.userId);
-    setUserName(data.detailInfo.userName);
-    setUserEmail(data.detailInfo.email);
+    // setToken(data.detailInfo.token);
+    // setUserId(data.detailInfo.userId);
+    // setUserName(data.detailInfo.userName);
+    // setUserEmail(data.detailInfo.email);
+    // setRole(data.detailInfo.role);
 
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        userId: data.detailInfo.userId,
+        userName: data.detailInfo.userName,
+        userEmail: data.detailInfo.email,
+        token: data.detailInfo.token,
+        role: data.detailInfo.role,
+      })
+    );
     if (data.detailInfo.role === "admin") {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
     }
-
     setIsAuth(true);
     history.push("/");
   };
 
+  useEffect(() => {
+    const authStorage = JSON.parse(localStorage.getItem("auth"));
+    if (authStorage !== null || token !== null) {
+      setToken(authStorage.token);
+      setUserId(authStorage.userId);
+      setUserName(authStorage.userName);
+      setUserEmail(authStorage.useEmail);
+      setRole(authStorage.role);
+      console.log("ada localStorage");
+      setIsAuth(true);
+    }
+  }, [isAuth, token]);
+
   const logoutHandler = () => {
+    localStorage.removeItem("auth");
     setToken(null);
     setIsAuth(false);
     setUserId("");

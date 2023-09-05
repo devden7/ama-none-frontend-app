@@ -49,7 +49,6 @@ const ProfileMenu = (props) => {
       type: "PASSWORD_CHANGE_INPUT",
       valueAction: inputRegisterPasswordRef.current.value,
     });
-    console.log(inputRegisterPasswordRef.current.value);
   };
 
   const registerPasswordRepeatHandler = () => {

@@ -46,6 +46,10 @@ const OrderProvider = (props) => {
     setOrderId(id);
   };
 
+  useEffect(() => {
+    getIdOrder();
+  }, [orderId]);
+
   const getSingleOrder = async () => {
     try {
       setLoading(null);
@@ -106,6 +110,7 @@ const OrderProvider = (props) => {
       }
       const data = await response.json();
       cartCtx.setItemCart([]);
+      cartCtx.setTotalBelanja(0);
       history.push("/riwayatorder");
     } catch (err) {
       console.log(err);

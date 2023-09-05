@@ -75,7 +75,6 @@ const AddProductForm = (props) => {
     valueState: 0,
     isValid: null,
   });
-  //console.log(props.productEdit.harga);
 
   const [imageUrlState, dispatchImageUrl] = useReducer(urlReducer, {
     valueState: "",
@@ -194,13 +193,11 @@ const AddProductForm = (props) => {
     });
     if (isEditing) {
       // 2. Jika form NAMA input diedit
-      console.log(e.target.value, "from handler");
       props.editNamaInputHandler(e.target.value);
     }
   };
   //setHargaProduct
   const hargaProductHandler = (e) => {
-    console.log(inputHargaRef.current.value, "REFFF HARGA");
     dispatchHarga({
       type: "HARGA_INPUT",
       valueAction: inputHargaRef.current.value,
@@ -302,7 +299,6 @@ const AddProductForm = (props) => {
         }
       } else {
         if (!namaValid) {
-          console.log("NAMA tidak VALID");
           inputNamaRef.current.focus();
         } else if (!hargaValid) {
           inputHargaRef.current.focus();

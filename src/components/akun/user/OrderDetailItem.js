@@ -106,11 +106,15 @@ const OrderDetailItem = (props) => {
     setIsOpen(!isOpen);
   };
 
+  const reviewItemIndex = props.review.findIndex(
+    (rev) => rev.accountInfo.prodId === props.id
+  );
+
   return (
     <Fragment>
       <li className="flex flex-wrap justify-between items-center w-full  border-solid border-b-[1px] border-slate-300 ">
         <div className="w-24 border-[1px] border-solid border-slate-300 p-2 mb-3">
-          <img src={props.imageUrl} alt="buku" />
+          <img src={props.imageUrl} alt={props.nama} />
         </div>
         <p>{props.nama}</p>
         <p>{props.harga}</p>
@@ -120,7 +124,7 @@ const OrderDetailItem = (props) => {
 
         {props.statusOrder === "Berhasil Dikirim" && (
           <div onClick={reviewFormHandler} className="flex items-center gap-2">
-            {!props.review[props.index] ? (
+            {!props.review[reviewItemIndex] ? (
               <button>Beri Review</button>
             ) : (
               <button>Penilaian Kamu</button>
@@ -133,7 +137,8 @@ const OrderDetailItem = (props) => {
           isOpen={isOpen}
           submitButtonReview={props.submitButtonReview}
           id={props.id}
-          review={props.review[props.index]}
+          nama={props.nama}
+          review={props.review[reviewItemIndex]}
         />
       </li>
     </Fragment>

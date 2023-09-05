@@ -23,7 +23,6 @@ const ProductsList = (props) => {
           const newProduct = prev.filter((product) => product._id !== prodId);
           return newProduct;
         });
-        console.log(data);
       } catch (err) {
         console.log(err);
       }

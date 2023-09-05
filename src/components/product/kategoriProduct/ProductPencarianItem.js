@@ -17,7 +17,7 @@ const ProductPencarianItem = (props) => {
   };
   return (
     <Fragment>
-      <div className="text-center mb-10 border-solid border-[1px] border-slate-300 text-slate-900 rounded-xl  sm:w-64 sm:mb-0  xl:w-72 md:w-52 overflow-hidden">
+      <div className="mb-10 border-solid border-[1px] border-slate-300 text-slate-900 rounded-xl  sm:w-64 sm:mb-0  xl:w-72 md:w-52 overflow-hidden">
         <li className="flex flex-col">
           <div className=" h-96 sm:h-60 md:h-72 overflow-hidden relative">
             <Link to={"/product/" + judulUntukLink}>

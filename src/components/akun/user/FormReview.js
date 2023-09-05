@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const FormReview = (props) => {
   const [userOptionValue, setUserOptionValue] = useState();
@@ -103,6 +104,9 @@ const FormReview = (props) => {
       </span>
     </div>
   );
+
+  const hitory = useHistory();
+
   const handlerSelect = (e) => {
     setUserOptionValue(e.target.value);
   };
@@ -128,10 +132,11 @@ const FormReview = (props) => {
       rating: +ambilAngkaReview,
       review: inputUserReview,
     };
+
     props.submitButtonReview(props.id, dataInput);
+    hitory.push(`/riwayatorder`);
   };
 
-  //console.log(props.reviewList.length);
   return (
     <div
       className={`w-full  transition-all ${

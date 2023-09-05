@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import OrderDetailItem from "./OrderDetailItem";
 import OrderDetailPembayaran from "./OrderDetailPembayaran";
@@ -9,6 +10,12 @@ import AuthContext from "../../../store/auth-context";
 const OrderDetail = () => {
   const orderCtx = useContext(orderContext);
   const authCtx = useContext(AuthContext);
+  const history = useHistory();
+
+  if (!authCtx.isAuth) {
+    history.push("/login");
+  }
+
   useEffect(() => {
     if (authCtx.isAuth) {
       orderCtx.getSingleOrder();
@@ -23,7 +30,7 @@ const OrderDetail = () => {
     const bulan = kalender.getMonth() + 1;
     const tahun = kalender.getFullYear(); // TANGGAL,BULAN,TAHUN
     const satukanKalender = tanggal + "-" + bulan + "-" + tahun;
-    console.log(id);
+
     try {
       const response = await fetch(
         "https://amanone-backend-app.vercel.app/kirim-review/" + id,
@@ -98,24 +105,21 @@ const OrderDetail = () => {
                   </div>
                 </div>
                 <ul className="flex flex-wrap gap-2 border-[1px] border-solid border-slate-300 p-4 rounded-lg">
-                  {orderCtx.singleItem?.detailOrderan.items.map(
-                    (item, index) => (
-                      <OrderDetailItem
-                        index={index}
-                        key={item.id}
-                        id={item.id}
-                        nama={item.nama}
-                        imageUrl={item.imageUrl}
-                        harga={item.harga}
-                        quantityItem={item.quantityItem}
-                        statusOrder={
-                          orderCtx.singleItem?.detailOrderan.statusOrder
-                        }
-                        review={orderCtx.reviewList}
-                        submitButtonReview={submitButtonReview}
-                      />
-                    )
-                  )}
+                  {orderCtx.singleItem?.detailOrderan.items.map((item) => (
+                    <OrderDetailItem
+                      key={item.id}
+                      id={item.id}
+                      nama={item.nama}
+                      imageUrl={item.imageUrl}
+                      harga={item.harga}
+                      quantityItem={item.quantityItem}
+                      statusOrder={
+                        orderCtx.singleItem?.detailOrderan.statusOrder
+                      }
+                      review={orderCtx.reviewList}
+                      submitButtonReview={submitButtonReview}
+                    />
+                  ))}
                 </ul>
               </div>
 

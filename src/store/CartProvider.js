@@ -122,12 +122,13 @@ const CartProvider = (props) => {
 
   const cartValue = {
     items: itemCart,
+    totalBelanja,
     setItemCart,
-    totalBelanja: totalBelanja,
-    takeDataCart: takeDataCart,
     tambahItem: addItemToCart,
     kurangItem: kurangItemFromCart,
     hapusItem: hapusItem,
+    setTotalBelanja,
+    takeDataCart,
     token: token,
   };
 

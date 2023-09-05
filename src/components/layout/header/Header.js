@@ -13,7 +13,7 @@ const Header = (props) => {
   const [open, setOpen] = useState(false);
 
   const calcItem = () => {
-    const jumlahItems = cartCtx.items.reduce((quantity, item) => {
+    const jumlahItems = cartCtx.items?.reduce((quantity, item) => {
       const itemQuantity =
         item.quantityItem === undefined ? 0 : item.quantityItem;
       return props.isAuth ? quantity + itemQuantity : 0;
@@ -25,7 +25,7 @@ const Header = (props) => {
     if (!authCtx.isAdmin) {
       calcItem();
     }
-  }, [authCtx.isAdmin]);
+  }, [authCtx.isAdmin, cartCtx.items]);
 
   const openSearch = () => {
     setOpen(!open);
@@ -55,7 +55,7 @@ const Header = (props) => {
               <button className="text-2xl relative">
                 <ion-icon name="cart-sharp"></ion-icon>
 
-                {totalCalcItems !== 0 && (
+                {totalCalcItems !== 0 && authCtx.isAuth && (
                   <p className="mt-2 h-5 w-5  rounded-full  bg-red-500 text-xs absolute mr-2 -top-3 left-5">
                     {totalCalcItems}
                   </p>

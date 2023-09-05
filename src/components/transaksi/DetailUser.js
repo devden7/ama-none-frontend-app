@@ -19,10 +19,6 @@ const DetailUser = (props) => {
               " " +
               props.takeUserInfo.kodePos}
           </p>
-
-          <NavLink to="/" className="text-blue-700">
-            Edit
-          </NavLink>
         </div>
       </div>
 
@@ -33,10 +29,6 @@ const DetailUser = (props) => {
             <span className="font-semibold">Melalui : </span>
             {props.takeTypePembayaran.viaPembayaran}
           </p>
-
-          <NavLink to="/" className="text-blue-700">
-            Edit
-          </NavLink>
         </div>
       </div>
     </Fragment>

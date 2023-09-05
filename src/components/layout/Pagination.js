@@ -24,7 +24,7 @@ const Pagination = (props) => {
     }
     return paginationArray;
   };
-  console.log();
+
   const paramsHandler = (getNumber) => {
     history.push(
       `/search?kategori=${
@@ -92,12 +92,11 @@ const Pagination = (props) => {
         )}
         {props.allPage !== undefined && renderPaginationNumbers}
 
-        {props.currentPage !== renderPaginationNumbers.length ||
-          (props.allPage !== undefined && (
-            <button onClick={nextHandler} className="text-[#212529] pt-1">
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-            </button>
-          ))}
+        {props.currentPage !== renderPaginationNumbers.length && (
+          <button onClick={nextHandler} className="text-[#212529] pt-1">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        )}
       </ul>
     </div>
   );

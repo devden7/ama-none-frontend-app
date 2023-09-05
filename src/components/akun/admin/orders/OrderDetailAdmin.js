@@ -12,11 +12,7 @@ const OrderDetailAdmin = () => {
   if (!authCtx.isAuth) {
     history.push("/login");
   }
-  useEffect(() => {
-    if (authCtx.isAuth) {
-      adminOrderCtx.getAdminSingleOrder();
-    }
-  }, [authCtx.isAuth]);
+
   const adminOrderCtx = useContext(AdminOrderContext);
   const harga = adminOrderCtx.adminListSingleOrder?.detailOrderan.items.reduce(
     (quantity, item) => {

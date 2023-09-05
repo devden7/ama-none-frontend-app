@@ -1,21 +1,14 @@
-import { useContext, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
 
 import CartList from "./CartList";
 import OrderBar from "./OrderBar";
 import CartContext from "../../store/cart-context";
 import AuthContext from "../../store/auth-context";
 
-const CartMenu = (props) => {
+const CartMenu = () => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
-  const location = useLocation();
-
-  useEffect(() => {
-    if (authCtx.isAuth) {
-      cartCtx.takeDataCart();
-    }
-  }, [authCtx.isAuth]);
 
   const tambahQuantity = (item) => {
     cartCtx.tambahItem(item);

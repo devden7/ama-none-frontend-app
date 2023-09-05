@@ -16,7 +16,6 @@ const RiwayatOrderMenu = () => {
   }, [authCtx.isAuth]);
 
   const getIdOrder = (id) => {
-    console.log(id);
     orderCtx.getIdOrder(id);
   };
 

@@ -3,6 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 
 const AkunHeader = (props) => {
   const history = useHistory();
+
   const userClick = () => {
     props.setMainClick(false);
     props.setUserButton(!props.userButton);

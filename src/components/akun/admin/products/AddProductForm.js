@@ -261,7 +261,6 @@ const AddProductForm = (props) => {
   //MENGIRIM PRODUCT KE BACKEND
   const addProductHandler = async (e) => {
     e.preventDefault();
-    console.log(+hargaState.valueState);
     // validation
     const product = {
       nama: namaState.valueState,

@@ -9,7 +9,6 @@ const CartProvider = (props) => {
   const [tokenUser, setTokenUser] = useState(null);
 
   const authCtx = useContext(AuthContext);
-
   const token = () => {
     setTokenUser(authCtx.token);
   };
@@ -19,7 +18,7 @@ const CartProvider = (props) => {
   }, [authCtx.isAuth]);
 
   const takeDataCart = async () => {
-    if (!authCtx.isAdmin) {
+    if (!authCtx.isAdmin && authCtx.isAuth) {
       try {
         const response = await fetch(
           "https://amanone-backend-app.vercel.app/get-cart",
@@ -54,7 +53,7 @@ const CartProvider = (props) => {
     if (tokenUser !== null) {
       takeDataCart();
     }
-  }, [tokenUser]);
+  }, [tokenUser, authCtx.isAuth]);
 
   const addItemToCart = async (item) => {
     try {
@@ -127,7 +126,6 @@ const CartProvider = (props) => {
     tambahItem: addItemToCart,
     kurangItem: kurangItemFromCart,
     hapusItem: hapusItem,
-    setTotalBelanja,
     takeDataCart,
     token: token,
   };

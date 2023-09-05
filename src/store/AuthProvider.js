@@ -59,6 +59,9 @@ const AuthProvider = (props) => {
   const logoutHandler = () => {
     setToken(null);
     setIsAuth(false);
+    setUserId("");
+    setUserName("");
+    setUserEmail("");
     history.push("/");
   };
 

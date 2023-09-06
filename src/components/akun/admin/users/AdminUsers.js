@@ -2,20 +2,18 @@ import { useState, useEffect } from "react";
 
 import UsersList from "./UsersList";
 import Loading from "../../../layout/loading/Loading";
+import config from "../../../../config";
 
 const AdminUsers = (props) => {
   const [userList, setUserList] = useState();
   const [loading, setLoading] = useState(null);
   const getUser = async () => {
     setLoading(true);
-    const response = await fetch(
-      "https://amanone-backend-app.vercel.app/admin/get-all-user",
-      {
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        },
-      }
-    );
+    const response = await fetch(`${config.urlApi}admin/get-all-user`, {
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+    });
     if (response.status !== 200) {
       return;
     }
@@ -29,15 +27,12 @@ const AdminUsers = (props) => {
   }, []);
 
   const deleteUserHandler = async (id) => {
-    const response = await fetch(
-      "https://amanone-backend-app.vercel.app/admin/delete-user/" + id,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        },
-      }
-    );
+    const response = await fetch(`${config.urlApi}admin/delete-user/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+    });
     if (response.status !== 201) {
       return;
     }

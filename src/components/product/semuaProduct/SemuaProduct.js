@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import Loading from "../../layout/loading/Loading";
 import ProductList from "./ProductList";
 import CartContext from "../../../store/cart-context";
+import config from "../../../config";
 
 const MainHome = () => {
   const [products, setProducts] = useState([]);
@@ -12,13 +13,10 @@ const MainHome = () => {
   const addToCart = (item) => {
     cartCtx.tambahItem(item);
   };
-
   const takeProduct = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/product"
-      );
+      const response = await fetch(`${config.urlApi}product`);
       const data = await response.json();
       if (response.status !== 200) {
         return;

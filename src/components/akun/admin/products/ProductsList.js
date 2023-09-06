@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import config from "../../../../config";
 
 const ProductsList = (props) => {
   const prodId = props.id;
@@ -7,7 +8,7 @@ const ProductsList = (props) => {
     if (window.confirm("Hapus Product?")) {
       try {
         const response = await fetch(
-          `https://amanone-backend-app.vercel.app/admin/delete-product/${prodId}`,
+          `${config.urlApi}admin/delete-product/${prodId}`,
           {
             method: "DELETE",
             headers: {

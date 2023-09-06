@@ -10,6 +10,7 @@ const Profile = () => {
   useEffect(() => {
     document.title = "Profile";
   }, []);
+
   const pageHandle = authCtx.isAuth ? (
     <ProfileMenu
       userName={authCtx.userName}

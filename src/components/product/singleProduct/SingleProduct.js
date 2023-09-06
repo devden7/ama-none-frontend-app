@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ProductMedia from "./ProductMedia";
 import Review from "./Review";
 import Loading from "../../layout/loading/Loading";
+import config from "../../../config";
 
 const ProductMenu = () => {
   const [product, setProduct] = useState({
@@ -23,7 +24,7 @@ const ProductMenu = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://amanone-backend-app.vercel.app/product/single-product/${prodId}`
+        `${config.urlApi}product/single-product/${prodId}`
       );
       if (response.status !== 200) {
         return;

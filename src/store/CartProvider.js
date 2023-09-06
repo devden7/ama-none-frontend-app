@@ -2,11 +2,13 @@ import { useEffect, useState, useContext } from "react";
 
 import CartContext from "./cart-context";
 import AuthContext from "./auth-context";
+import config from "../config";
 
 const CartProvider = (props) => {
   const [itemCart, setItemCart] = useState([]);
   const [totalBelanja, setTotalBelanja] = useState(0);
   const [tokenUser, setTokenUser] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const authCtx = useContext(AuthContext);
   const token = () => {
@@ -20,14 +22,12 @@ const CartProvider = (props) => {
   const takeDataCart = async () => {
     if (!authCtx.isAdmin && authCtx.isAuth) {
       try {
-        const response = await fetch(
-          "https://amanone-backend-app.vercel.app/get-cart",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenUser}`,
-            },
-          }
-        );
+        setLoading(true);
+        const response = await fetch(`${config.urlApi}get-cart`, {
+          headers: {
+            Authorization: `Bearer ${tokenUser}`,
+          },
+        });
 
         const data = await response.json();
 
@@ -42,6 +42,7 @@ const CartProvider = (props) => {
               result +
               data.items[0].cart[i].harga * data.items[0].cart[i].quantityItem;
             setTotalBelanja(result);
+            setLoading(false);
           }
         }
       } catch (err) {
@@ -58,17 +59,14 @@ const CartProvider = (props) => {
 
   const addItemToCart = async (item) => {
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/add-cart",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenUser}`,
-          },
-          body: JSON.stringify(item),
-        }
-      );
+      const response = await fetch(`${config.urlApi}add-cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(item),
+      });
       if (response.status !== 201) {
         return;
       }
@@ -80,13 +78,10 @@ const CartProvider = (props) => {
 
   const kurangItemFromCart = async (id) => {
     try {
-      const response = await fetch(
-        `https://amanone-backend-app.vercel.app/reduce-quantity/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await fetch(`${config.urlApi}reduce-quantity/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+      });
       if (response.status !== 201) {
         return;
       }
@@ -98,12 +93,9 @@ const CartProvider = (props) => {
 
   const hapusItem = async (id) => {
     try {
-      const response = await fetch(
-        `https://amanone-backend-app.vercel.app/delete-cart/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${config.urlApi}delete-cart/${id}`, {
+        method: "DELETE",
+      });
       if (response.status !== 201) {
         return;
       }
@@ -120,15 +112,21 @@ const CartProvider = (props) => {
     }
   };
 
+  const resetTotalBelanja = () => {
+    setTotalBelanja(0);
+  };
+
   const cartValue = {
     items: itemCart,
     totalBelanja,
+    loading,
     setItemCart,
     tambahItem: addItemToCart,
     kurangItem: kurangItemFromCart,
     hapusItem: hapusItem,
     takeDataCart,
     token: token,
+    resetTotalBelanja,
   };
 
   return (

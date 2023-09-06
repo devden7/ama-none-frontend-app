@@ -6,6 +6,7 @@ import OrderDetailPembayaran from "./OrderDetailPembayaran";
 import orderContext from "../../../store/order-context";
 import Loading from "../../layout/loading/Loading";
 import AuthContext from "../../../store/auth-context";
+import config from "../../../config";
 
 const OrderDetail = () => {
   const orderCtx = useContext(orderContext);
@@ -32,22 +33,19 @@ const OrderDetail = () => {
     const satukanKalender = tanggal + "-" + bulan + "-" + tahun;
 
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/kirim-review/" + id,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: authCtx.userId,
-            userName: authCtx.userName,
-            rating: rating,
-            review: review,
-            tanggal: satukanKalender,
-          }),
-        }
-      );
+      const response = await fetch(`${config.urlApi}kirim-review/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: authCtx.userId,
+          userName: authCtx.userName,
+          rating: rating,
+          review: review,
+          tanggal: satukanKalender,
+        }),
+      });
       if (response.status !== 201) {
         return;
       }

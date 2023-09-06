@@ -2,13 +2,18 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import AuthContext from "./auth-context";
+import config from "../config";
 
 const AuthProvider = (props) => {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [token, setToken] = useState(null);
-  const [isAuth, setIsAuth] = useState(null);
+  const [isAuth, setIsAuth] = useState(
+    localStorage.getItem("auth")
+      ? JSON.parse(localStorage.getItem("auth")).isAuth
+      : null
+  );
   const [isAdmin, setIsAdmin] = useState(null);
   const [role, setRole] = useState(null);
   const [errorMassage, setErrorMessage] = useState("");
@@ -21,16 +26,13 @@ const AuthProvider = (props) => {
   const loginHandler = async (e, dataLogin) => {
     e.preventDefault();
 
-    const response = await fetch(
-      "https://amanone-backend-app.vercel.app/admin/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/JSON",
-        },
-        body: JSON.stringify(dataLogin),
-      }
-    );
+    const response = await fetch(`${config.urlApi}admin/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/JSON",
+      },
+      body: JSON.stringify(dataLogin),
+    });
 
     const data = await response.json();
 
@@ -56,6 +58,7 @@ const AuthProvider = (props) => {
         userEmail: data.detailInfo.email,
         token: data.detailInfo.token,
         role: data.detailInfo.role,
+        isAuth: true,
       })
     );
     if (data.detailInfo.role === "admin") {
@@ -73,17 +76,17 @@ const AuthProvider = (props) => {
       setToken(authStorage.token);
       setUserId(authStorage.userId);
       setUserName(authStorage.userName);
-      setUserEmail(authStorage.useEmail);
+      setUserEmail(authStorage.userEmail);
       setRole(authStorage.role);
-      console.log("ada localStorage");
-      setIsAuth(true);
+
+      setIsAuth(authStorage.isAuth);
     }
   }, [isAuth, token]);
 
   const logoutHandler = () => {
     localStorage.removeItem("auth");
     setToken(null);
-    setIsAuth(false);
+    setIsAuth(null);
     setUserId("");
     setUserName("");
     setUserEmail("");
@@ -92,18 +95,15 @@ const AuthProvider = (props) => {
 
   const gantiPassword = async (dataAkun) => {
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/ganti-password",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
+      const response = await fetch(`${config.urlApi}admin/ganti-password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
 
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(dataAkun),
-        }
-      );
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataAkun),
+      });
 
       const data = await response.json();
 

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import Loading from "../../../layout/loading/Loading";
 import ProductsList from "./ProductsList";
+import config from "../../../../config";
 
 const AdminProducts = (props) => {
   const [allProducts, setAllProducts] = useState([]);
@@ -11,14 +12,11 @@ const AdminProducts = (props) => {
   const handleAllProduct = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/products",
-        {
-          headers: {
-            Authorization: `Bearer ${props.token}`,
-          },
-        }
-      );
+      const response = await fetch(`${config.urlApi}admin/products`, {
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+      });
       if (response.status !== 200) {
         return;
       }

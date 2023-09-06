@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import FilterProduct from "./FilterProduct";
 import HasilProduct from "./HasilProduct";
 import CartContext from "../../../store/cart-context";
+import config from "../../../config";
 
 const KategoriProduct = () => {
   const [kategori, setKategori] = useState([]);
@@ -27,7 +28,7 @@ const KategoriProduct = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://amanone-backend-app.vercel.app/search?kategori=${
+        `${config.urlApi}search?kategori=${
           ambilKategoriValue === null ? "semua" : ambilKategoriValue
         }&keyword=${
           ambilKeywordQuery === null ? "semua" : ambilKeywordQuery
@@ -52,9 +53,7 @@ const KategoriProduct = () => {
   };
   const takeKategori = async () => {
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/product/list-kategori"
-      );
+      const response = await fetch(`${config.urlApi}product/list-kategori`);
       const data = await response.json();
       if (response.status !== 200) {
         return;

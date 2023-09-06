@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import AuthContext from "./auth-context";
 import AdminOrderContext from "./admin-order-context";
+import config from "../config";
 
 const AdminOrderProvider = (props) => {
   //ADMIN LIST ORDER
@@ -26,14 +27,11 @@ const AdminOrderProvider = (props) => {
   const getAdminOrder = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/get-all-order",
-        {
-          headers: {
-            Authorization: `Bearer ${tokenUser}`,
-          },
-        }
-      );
+      const response = await fetch(`${config.urlApi}admin/get-all-order`, {
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
+      });
       if (response.status !== 200) {
         return;
       }
@@ -49,7 +47,7 @@ const AdminOrderProvider = (props) => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/single-order-admin/" + id,
+        `${config.urlApi}admin/single-order-admin/${id}`,
         {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -69,17 +67,14 @@ const AdminOrderProvider = (props) => {
 
   const updateStatusPengiriman = async (id, status) => {
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/kirim-barang/" + id,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenUser}`,
-          },
-          body: JSON.stringify(status),
-        }
-      );
+      const response = await fetch(`${config.urlApi}admin/kirim-barang/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(status),
+      });
 
       if (response.status !== 201) {
         return;

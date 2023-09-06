@@ -5,6 +5,7 @@ import AreaChart from "./AreaChart";
 import PieChart from "./PieChart";
 import AdminOrderContext from "../../../../store/admin-order-context";
 import AuthContext from "../../../../store/auth-context";
+import config from "../../../../config";
 
 const DashboardMenu = (props) => {
   const [userList, setUserList] = useState();
@@ -12,14 +13,11 @@ const DashboardMenu = (props) => {
   const authCtx = useContext(AuthContext);
 
   const getUser = async () => {
-    const response = await fetch(
-      "https://amanone-backend-app.vercel.app/admin/get-all-user",
-      {
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        },
-      }
-    );
+    const response = await fetch(`${config.urlApi}admin/get-all-user`, {
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+    });
     const data = await response.json();
     setUserList(data.userList);
   };

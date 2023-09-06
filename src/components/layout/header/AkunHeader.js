@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import CartContext from "../../../store/cart-context";
 
 const AkunHeader = (props) => {
   const history = useHistory();
-
+  const cartCtx = useContext(CartContext);
   const userClick = () => {
     props.setMainClick(false);
     props.setUserButton(!props.userButton);
@@ -15,6 +16,7 @@ const AkunHeader = (props) => {
 
   const logoutBtnHandler = () => {
     props.logoutHandler();
+    cartCtx.resetTotalBelanja();
     history.push("/login");
   };
   return (

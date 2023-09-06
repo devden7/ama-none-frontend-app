@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import OrderContext from "./order-context";
 import AuthContext from "./auth-context";
 import CartContext from "./cart-context";
+import config from "../config";
 
 const OrderProvider = (props) => {
   const [loading, setLoading] = useState(null);
@@ -18,29 +19,35 @@ const OrderProvider = (props) => {
   const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
   const history = useHistory();
+
   const getOrder = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/get-order",
-        {
+    if (authCtx.isAuth && tokenUser !== null) {
+      try {
+        setLoading(true);
+        const response = await fetch(`${config.urlApi}get-order`, {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
           },
-        }
-      );
-      const data = await response.json();
+        });
+        const data = await response.json();
 
-      if (response.status !== 200) {
-        console.log(data.message);
-        return;
+        if (response.status !== 200) {
+          console.log(data.message);
+          return;
+        }
+        setOrderItems(data.dataOrder);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
       }
-      setOrderItems(data.dataOrder);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (tokenUser !== null) {
+      getOrder();
+    }
+  }, [tokenUser, authCtx.token]);
 
   const getIdOrder = async (id) => {
     setOrderId(id);
@@ -55,7 +62,7 @@ const OrderProvider = (props) => {
       setLoading(null);
       setLoading(true);
       const response = await fetch(
-        "https://amanone-backend-app.vercel.app/get-single-order/" + orderId,
+        `${config.urlApi}get-single-order/${orderId}`,
         {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -78,9 +85,7 @@ const OrderProvider = (props) => {
   const getReviewUser = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/get-review/" + orderId
-      );
+      const response = await fetch(`${config.urlApi}get-review/${orderId}`);
       if (response.status !== 200) {
         return;
       }
@@ -94,17 +99,14 @@ const OrderProvider = (props) => {
   };
   const addOrder = async (order) => {
     try {
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/order-product",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${tokenUser}`,
-          },
-          body: JSON.stringify(order),
-        }
-      );
+      const response = await fetch(`${config.urlApi}order-product`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
+        body: JSON.stringify(order),
+      });
       if (response.status !== 201) {
         return;
       }

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import AddProductForm from "./AddProductForm";
 import Loading from "../../../layout/loading/Loading";
+import config from "../../../../config";
 
 const EditProductPage = () => {
   const [inputNamaEdit, setInputNamaEdit] = useState("");
@@ -19,7 +20,7 @@ const EditProductPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://amanone-backend-app.vercel.app/product/edit-product/" + Id
+        `${config.urlApi}product/edit-product/` + Id
       );
       if (response.status !== 200) {
         return;

@@ -1,5 +1,6 @@
 import { useState, useRef, useReducer } from "react";
 import { useHistory } from "react-router-dom";
+import config from "../../../config";
 
 const registerNameReducer = (state, action) => {
   if (action.type === "NAMA_REGISTER_INPUT") {
@@ -140,16 +141,13 @@ const DaftarForm = () => {
         role: "users",
       };
 
-      const response = await fetch(
-        "https://amanone-backend-app.vercel.app/admin/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/JSON",
-          },
-          body: JSON.stringify(user),
-        }
-      );
+      const response = await fetch(`${config.urlApi}admin/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/JSON",
+        },
+        body: JSON.stringify(user),
+      });
 
       const data = await response.json();
 

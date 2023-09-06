@@ -1,5 +1,6 @@
 import { useReducer, useState, useRef, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import config from "../../../../config";
 
 //INIT REDUCER
 const namaReducer = (state, action) => {
@@ -273,12 +274,13 @@ const AddProductForm = (props) => {
       rating: 0,
       createdAt: new Date(),
     };
+
     try {
       // EDIT PRODUCT
       if (isValid) {
         const urlEndPoint = isEditing
-          ? `https://amanone-backend-app.vercel.app/admin/edit-product/${props.params}`
-          : "https://amanone-backend-app.vercel.app/admin/add-product";
+          ? `${config.urlApi}admin/edit-product/${props.params}`
+          : `${config.urlApi}admin/add-product`;
 
         const method = !isEditing ? "POST" : "PUT";
 

@@ -55,7 +55,7 @@ const Header = (props) => {
               <button className="text-2xl relative">
                 <ion-icon name="cart-sharp"></ion-icon>
 
-                {totalCalcItems !== 0 && authCtx.isAuth && (
+                {totalCalcItems !== 0 && authCtx.isAuth && !cartCtx.loading && (
                   <p className="mt-2 h-5 w-5  rounded-full  bg-red-500 text-xs absolute mr-2 -top-3 left-5">
                     {totalCalcItems}
                   </p>

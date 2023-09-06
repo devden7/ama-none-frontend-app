@@ -13,7 +13,7 @@ const RiwayatOrderMenu = () => {
     if (authCtx.isAuth) {
       orderCtx.getOrder();
     }
-  }, [authCtx.isAuth]);
+  }, [authCtx.isAuth, authCtx.token]);
 
   const getIdOrder = (id) => {
     orderCtx.getIdOrder(id);

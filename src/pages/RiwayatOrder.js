@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import RiwayatOrderMenu from "../components/akun/user/RiwayatOrderMenu";
@@ -8,15 +8,16 @@ const RiwayatOrder = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
 
-  useEffect(() => {
-    document.title = "Riwayat Order";
-  }, []);
-
   const pageHandle = authCtx.isAuth ? (
     <RiwayatOrderMenu />
   ) : (
     history.push("/login")
   );
+
+  useEffect(() => {
+    document.title = "Riwayat Order";
+  }, []);
+
   return pageHandle;
 };
 

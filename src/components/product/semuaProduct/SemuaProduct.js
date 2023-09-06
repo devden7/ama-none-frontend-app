@@ -17,6 +17,7 @@ const MainHome = () => {
     try {
       setLoading(true);
       const response = await fetch(`${config.urlApi}product`);
+      console.log(config.urlApi);
       const data = await response.json();
       if (response.status !== 200) {
         return;

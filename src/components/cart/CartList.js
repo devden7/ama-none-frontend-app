@@ -17,7 +17,7 @@ const CartList = (props) => {
     <div className=" w-full">
       <ul>
         <ul>
-          {props.items.map((item) => (
+          {props.items?.map((item) => (
             <CartItem
               key={item.id}
               id={item.id}

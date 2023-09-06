@@ -11,7 +11,9 @@ const HasilPencarian = (props) => {
   const selectHandlerChange = (e) => {
     props.setDefaultCurrentPage();
     history.push(
-      `/search?kategori=${ambilKategoriValue}&keyword=${
+      `/search?kategori=${
+        ambilKategoriValue === null ? "semua" : ambilKategoriValue
+      }&keyword=${
         ambilKeywordQuery === null ? "semua" : ambilKeywordQuery
       }&harga=${ambilHargaValue === null ? "semua" : ambilHargaValue}&rating=${
         ambilRatingValue === null ? "semua" : ambilRatingValue

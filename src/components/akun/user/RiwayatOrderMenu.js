@@ -30,7 +30,7 @@ const RiwayatOrderMenu = () => {
           )}
           {orderCtx.loading === false && orderCtx.orderItems.length !== 0 && (
             <RiwayatOrderlist
-              orderList={orderCtx?.orderItems}
+              orderList={orderCtx.orderItems}
               getIdOrder={getIdOrder}
             />
           )}

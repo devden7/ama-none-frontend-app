@@ -19,7 +19,7 @@ const RiwayatOrderlist = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.orderList.map((order) => (
+        {props.orderList?.map((order) => (
           <RiwayatOrderItem
             key={order._id}
             id={order._id}

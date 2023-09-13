@@ -10,7 +10,7 @@ const RiwayatOrderMenu = () => {
   const authCtx = useContext(AuthContext);
 
   useEffect(() => {
-    if (authCtx.isAuth) {
+    if (authCtx.isAuth && !authCtx.isAdmin) {
       orderCtx.getOrder();
     }
   }, [authCtx.isAuth, authCtx.token]);
@@ -28,7 +28,7 @@ const RiwayatOrderMenu = () => {
           {orderCtx.orderItems?.length === 0 && orderCtx.loading === false && (
             <p>Transaksi pesanan tidak ada</p>
           )}
-          {orderCtx.loading === false && orderCtx.orderItems.length !== 0 && (
+          {orderCtx.loading === false && orderCtx.orderItems?.length !== 0 && (
             <RiwayatOrderlist
               orderList={orderCtx.orderItems}
               getIdOrder={getIdOrder}

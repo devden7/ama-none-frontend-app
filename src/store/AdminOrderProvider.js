@@ -89,10 +89,10 @@ const AdminOrderProvider = (props) => {
     adminListOrder,
     adminListSingleOrder,
 
-    getAdminOrder: getAdminOrder,
-    getAdminSingleOrder: getAdminSingleOrder,
-    updateStatusPengiriman: updateStatusPengiriman,
-    token: token,
+    getAdminOrder,
+    getAdminSingleOrder,
+    updateStatusPengiriman,
+    token,
     loading,
   };
 

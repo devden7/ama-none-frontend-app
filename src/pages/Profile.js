@@ -11,15 +11,19 @@ const Profile = () => {
     document.title = "Profile";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <ProfileMenu
-      userName={authCtx.userName}
-      userEmail={authCtx.userEmail}
-      token={authCtx.token}
-    />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && !authCtx.isAdmin ? (
+      <ProfileMenu
+        userName={authCtx.userName}
+        userEmail={authCtx.userEmail}
+        token={authCtx.token}
+      />
+    ) : null;
+
+  if (!authCtx.isAuth || authCtx.isAdmin) {
+    history.push("/");
+  }
+
   return pageHandle;
 };
 

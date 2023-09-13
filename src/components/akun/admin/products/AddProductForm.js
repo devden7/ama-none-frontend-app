@@ -283,9 +283,8 @@ const AddProductForm = (props) => {
           : `${config.urlApi}admin/add-product`;
 
         const method = !isEditing ? "POST" : "PUT";
-
         // ADD-PRODUCT
-        const response = fetch(urlEndPoint, {
+        const response = await fetch(urlEndPoint, {
           method: method,
           headers: {
             "Content-Type": "application/json",
@@ -294,10 +293,10 @@ const AddProductForm = (props) => {
           body: JSON.stringify(product),
         });
 
-        const data = await response;
         if (response.status !== 201) {
           return;
         }
+        history.push("/");
       } else {
         if (!namaValid) {
           inputNamaRef.current.focus();
@@ -317,7 +316,6 @@ const AddProductForm = (props) => {
     } catch (err) {
       console.log(err);
     }
-    history.push("/");
   };
 
   return (

@@ -1,9 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
+import AuthContext from "../../../store/auth-context";
 
 const ProductPencarianItem = (props) => {
   const urlProduct = props.id + "/" + props.product.nama;
 
+  const authCtx = useContext(AuthContext);
   const judulUntukLink = urlProduct.replace(" ", "-");
   const addToCartHandler = () => {
     props.addToCart({
@@ -13,6 +15,8 @@ const ProductPencarianItem = (props) => {
       imageUrl: props.product.imageUrl,
       quantityItem: 1,
       kategori: props.product.kategori,
+      isReview: null,
+      review: {},
     });
   };
   return (
@@ -97,12 +101,19 @@ const ProductPencarianItem = (props) => {
               <span className="text-sm">Rp</span>
               {props.product.harga}
             </p>
-            <button
-              onClick={addToCartHandler}
-              className="bg-[#f0c040] hover:bg-[#e9ba3a] my-2 p-2 rounded-md"
-            >
-              Simpan Ke Keranjang
-            </button>
+            {!authCtx.isAdmin &&
+              (props.product.stok > 0 ? (
+                <button
+                  onClick={addToCartHandler}
+                  className="bg-[#f0c040] hover:bg-[#e9ba3a] my-2 p-2 rounded-md"
+                >
+                  Simpan Ke Keranjang
+                </button>
+              ) : (
+                <p className="inline-block bg-[#e93a3a] text-white my-2 p-2 rounded-md">
+                  stok habis
+                </p>
+              ))}
           </div>
         </li>
       </div>

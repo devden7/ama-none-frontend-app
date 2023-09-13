@@ -11,7 +11,11 @@ const Orders = () => {
     document.title = "Orders List";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? <AdminOrders /> : history.push("/login");
+  const pageHandle = authCtx.isAuth && authCtx.isAdmin ? <AdminOrders /> : null;
+
+  if (!authCtx.isAuth || !authCtx.isAdmin) {
+    history.push("/");
+  }
 
   return pageHandle;
 };

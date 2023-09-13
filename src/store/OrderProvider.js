@@ -14,16 +14,28 @@ const OrderProvider = (props) => {
   const [orderItems, setOrderItems] = useState();
   const [singleItem, setSingleItem] = useState();
   const [orderId, setOrderId] = useState();
-  const [reviewList, setReviewList] = useState([]);
 
   const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
   const history = useHistory();
 
+  const token = () => {
+    setTokenUser(authCtx.token);
+  };
+
+  useEffect(() => {
+    token();
+  }, [authCtx.token]);
+
   const getOrder = async () => {
-    if (authCtx.isAuth && tokenUser !== null) {
+    if (
+      authCtx.isAuth &&
+      tokenUser !== null &&
+      authCtx.isAuth &&
+      !authCtx.isAdmin
+    ) {
+      setLoading(true);
       try {
-        setLoading(true);
         const response = await fetch(`${config.urlApi}get-order`, {
           headers: {
             Authorization: `Bearer ${tokenUser}`,
@@ -32,10 +44,51 @@ const OrderProvider = (props) => {
         const data = await response.json();
 
         if (response.status !== 200) {
+          authCtx.logoutHandler();
+          history.push("/login");
           console.log(data.message);
           return;
         }
         setOrderItems(data.dataOrder);
+        setLoading(null);
+      } catch (err) {
+        console.log(err);
+      }
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getOrder();
+  }, [tokenUser]);
+
+  const getIdOrder = (id) => {
+    setOrderId(id);
+  };
+
+  const getSingleOrder = async () => {
+    if (
+      orderId !== undefined &&
+      tokenUser !== null &&
+      authCtx.isAuth &&
+      !authCtx.isAdmin
+    ) {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${config.urlApi}get-single-order/${orderId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenUser}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (response.status !== 200) {
+          console.log(data.message);
+          return;
+        }
+
+        setSingleItem(data.orderDetail);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -43,60 +96,6 @@ const OrderProvider = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (tokenUser !== null) {
-      getOrder();
-    }
-  }, [tokenUser, authCtx.token]);
-
-  const getIdOrder = async (id) => {
-    setOrderId(id);
-  };
-
-  useEffect(() => {
-    getIdOrder();
-  }, [orderId]);
-
-  const getSingleOrder = async () => {
-    try {
-      setLoading(null);
-      setLoading(true);
-      const response = await fetch(
-        `${config.urlApi}get-single-order/${orderId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenUser}`,
-          },
-        }
-      );
-      if (response.status !== 200) {
-        console.log(data.message);
-        return;
-      }
-
-      const data = await response.json();
-      setSingleItem(data.orderDetail);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getReviewUser = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${config.urlApi}get-review/${orderId}`);
-      if (response.status !== 200) {
-        return;
-      }
-      const data = await response.json();
-
-      setReviewList(data.data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const addOrder = async (order) => {
     try {
       const response = await fetch(`${config.urlApi}order-product`, {
@@ -112,7 +111,6 @@ const OrderProvider = (props) => {
       }
       const data = await response.json();
       cartCtx.setItemCart([]);
-      cartCtx.setTotalBelanja(0);
       history.push("/riwayatorder");
     } catch (err) {
       console.log(err);
@@ -120,25 +118,17 @@ const OrderProvider = (props) => {
     getOrder();
   };
 
-  const token = () => {
-    setTokenUser(authCtx.token);
-  };
-
-  useEffect(() => {
-    token();
-  }, [authCtx.token]);
-
   const orderValue = {
-    orderItems: orderItems,
-    singleItem: singleItem,
-    reviewList,
+    orderItems,
+    singleItem,
     loading,
-    getOrder: getOrder,
-    getSingleOrder: getSingleOrder,
-    getIdOrder: getIdOrder,
-    getReviewUser,
-    addOrder: addOrder,
-    token: token,
+    orderId,
+    tokenUser,
+    getOrder,
+    getSingleOrder,
+    getIdOrder,
+    addOrder,
+    token,
   };
 
   return (

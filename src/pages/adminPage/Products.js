@@ -11,11 +11,15 @@ const Products = () => {
   useEffect(() => {
     document.title = "Products List";
   }, []);
-  const pageHandle = authCtx.isAuth ? (
-    <AdminProducts token={authCtx.token} isAuth={authCtx.isAuth} />
-  ) : (
-    history.push("/login")
-  );
+
+  const pageHandle =
+    authCtx.isAuth && authCtx.isAdmin ? (
+      <AdminProducts token={authCtx.token} isAuth={authCtx.isAuth} />
+    ) : null;
+
+  if (!authCtx.isAuth || !authCtx.isAdmin) {
+    history.push("/");
+  }
   return pageHandle;
 };
 

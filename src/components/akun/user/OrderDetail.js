@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import OrderDetailItem from "./OrderDetailItem";
 import OrderDetailPembayaran from "./OrderDetailPembayaran";
@@ -12,6 +12,7 @@ const OrderDetail = () => {
   const orderCtx = useContext(orderContext);
   const authCtx = useContext(AuthContext);
   const history = useHistory();
+  const { orderId } = useParams();
 
   if (!authCtx.isAuth) {
     history.push("/login");
@@ -20,16 +21,17 @@ const OrderDetail = () => {
   useEffect(() => {
     if (authCtx.isAuth) {
       orderCtx.getSingleOrder();
-      orderCtx.getReviewUser();
+      orderCtx.getIdOrder(orderId);
+      orderCtx.token();
     }
-  }, [authCtx.isAuth]);
+  }, [authCtx.isAuth, orderCtx.orderId, orderCtx.tokenUser]);
 
   const submitButtonReview = async (id, productReview) => {
-    const { rating, review } = productReview;
+    const { orderId, rating, review } = productReview;
     const kalender = new Date();
     const tanggal = kalender.getDate();
     const bulan = kalender.getMonth() + 1;
-    const tahun = kalender.getFullYear(); // TANGGAL,BULAN,TAHUN
+    const tahun = kalender.getFullYear();
     const satukanKalender = tanggal + "-" + bulan + "-" + tahun;
 
     try {
@@ -39,7 +41,7 @@ const OrderDetail = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: authCtx.userId,
+          orderId: orderId,
           userName: authCtx.userName,
           rating: rating,
           review: review,
@@ -106,6 +108,7 @@ const OrderDetail = () => {
                   {orderCtx.singleItem?.detailOrderan.items.map((item) => (
                     <OrderDetailItem
                       key={item.id}
+                      orderId={orderId}
                       id={item.id}
                       nama={item.nama}
                       imageUrl={item.imageUrl}
@@ -114,7 +117,9 @@ const OrderDetail = () => {
                       statusOrder={
                         orderCtx.singleItem?.detailOrderan.statusOrder
                       }
-                      review={orderCtx.reviewList}
+                      userName={orderCtx.singleItem.accountInfo.namaAkun}
+                      review={item.review}
+                      isReview={item.isReview}
                       submitButtonReview={submitButtonReview}
                     />
                   ))}

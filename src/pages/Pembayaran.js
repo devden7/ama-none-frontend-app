@@ -12,11 +12,12 @@ const Pembayaran = () => {
     document.title = "Pembayaran";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <PembayaranMenu />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && !authCtx.isAdmin ? <PembayaranMenu /> : null;
+
+  if (!authCtx.isAuth || authCtx.isAdmin) {
+    history.push("/");
+  }
   return pageHandle;
 };
 

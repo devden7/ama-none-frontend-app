@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import CartContext from "./cart-context";
 import AuthContext from "./auth-context";
@@ -9,7 +10,7 @@ const CartProvider = (props) => {
   const [totalBelanja, setTotalBelanja] = useState(0);
   const [tokenUser, setTokenUser] = useState(null);
   const [loading, setLoading] = useState(null);
-
+  const history = useHistory();
   const authCtx = useContext(AuthContext);
   const token = () => {
     setTokenUser(authCtx.token);
@@ -20,7 +21,7 @@ const CartProvider = (props) => {
   }, [authCtx.isAuth, authCtx.token]);
 
   const takeDataCart = async () => {
-    if (!authCtx.isAdmin && authCtx.isAuth) {
+    if (authCtx.role === "users" && authCtx.isAuth) {
       try {
         setLoading(true);
         const response = await fetch(`${config.urlApi}get-cart`, {
@@ -34,16 +35,20 @@ const CartProvider = (props) => {
         if (response.status !== 200) {
           console.log(data.message);
           return;
+        } else if (data.items[0] === undefined) {
+          authCtx.logoutHandler();
+          history.push("/login");
+          console.log("silahkan login ulang");
         } else {
-          setItemCart(data?.items[0].cart);
+          setItemCart(data.items[0].cart);
           let result = 0;
           for (let i = 0; i < data.items[0].cart.length; i++) {
             result =
               result +
               data.items[0].cart[i].harga * data.items[0].cart[i].quantityItem;
             setTotalBelanja(result);
-            setLoading(false);
           }
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
@@ -80,7 +85,10 @@ const CartProvider = (props) => {
     try {
       const response = await fetch(`${config.urlApi}reduce-quantity/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`,
+        },
       });
       if (response.status !== 201) {
         return;
@@ -95,6 +103,9 @@ const CartProvider = (props) => {
     try {
       const response = await fetch(`${config.urlApi}delete-cart/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${tokenUser}`,
+        },
       });
       if (response.status !== 201) {
         return;
@@ -125,7 +136,7 @@ const CartProvider = (props) => {
     kurangItem: kurangItemFromCart,
     hapusItem: hapusItem,
     takeDataCart,
-    token: token,
+    token,
     resetTotalBelanja,
   };
 

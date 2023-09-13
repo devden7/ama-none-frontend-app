@@ -31,16 +31,18 @@ const CartMenu = () => {
           <div className="flex flex-wrap justify-between md:flex-nowrap gap-4">
             <div className="flex flex-wrap flex-col w-full">
               <div className=" w-full">
-                {authCtx.isAuth === true && cartCtx.items.length === 0 && (
-                  <div className="bg-[#b6effb]  p-4 rounded-lg">
-                    <p>
-                      Keranjang belanja kosong,
-                      <NavLink to="/" className="text-blue-700">
-                        Cari Barang..
-                      </NavLink>
-                    </p>
-                  </div>
-                )}
+                {authCtx.isAuth === true &&
+                  cartCtx.items.length === 0 &&
+                  cartCtx.loading === false && (
+                    <div className="bg-[#b6effb]  p-4 rounded-lg">
+                      <p>
+                        Keranjang belanja kosong,
+                        <NavLink to="/" className="text-blue-700">
+                          Cari Barang..
+                        </NavLink>
+                      </p>
+                    </div>
+                  )}
 
                 {!authCtx.isAuth && (
                   <div className="bg-[#b6effb]  p-4 rounded-lg">

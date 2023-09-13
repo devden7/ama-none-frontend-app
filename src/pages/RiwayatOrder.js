@@ -8,15 +8,16 @@ const RiwayatOrder = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
 
-  const pageHandle = authCtx.isAuth ? (
-    <RiwayatOrderMenu />
-  ) : (
-    history.push("/login")
-  );
-
   useEffect(() => {
     document.title = "Riwayat Order";
   }, []);
+
+  const pageHandle =
+    authCtx.isAuth && !authCtx.isAdmin ? <RiwayatOrderMenu /> : null;
+
+  if (!authCtx.isAuth || authCtx.isAdmin) {
+    history.push("/");
+  }
 
   return pageHandle;
 };

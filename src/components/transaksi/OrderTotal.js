@@ -3,6 +3,28 @@ const OrderTotal = (props) => {
   const biayaAdmin = 1000;
   const calcBiaya = props.totalBelanja + biayaPengiriman + biayaAdmin;
 
+  const angkaToRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+
+    currencyDisplay: "code",
+  })
+    .format(props.totalBelanja)
+    .replace("IDR", " ")
+    .trim();
+
+  const calBiayaToRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+
+    currencyDisplay: "code",
+  })
+    .format(calcBiaya)
+    .replace("IDR", " ")
+    .trim();
+
   const submitOrderHandler = (e) => {
     e.preventDefault();
     props.orderBtnHandler(calcBiaya);
@@ -16,22 +38,22 @@ const OrderTotal = (props) => {
           </p>
           <div className="flex justify-between my-2">
             <p>Barang</p>
-            <p>{props.totalBelanja}</p>
+            <p>Rp {angkaToRupiah}</p>
           </div>
           <hr />
           <div className="flex justify-between my-2">
             <p>Pengiriman</p>
-            <p>11000</p>
+            <p>Rp 11.000</p>
           </div>
           <hr />
           <div className="flex justify-between my-2">
             <p>Biaya Admin</p>
-            <p>1000</p>
+            <p>Rp 1000</p>
           </div>
           <hr />
           <div className="flex justify-between my-2 font-bold">
             <p>Total Pesanan</p>
-            <p>{calcBiaya}</p>
+            <p>Rp {calBiayaToRupiah}</p>
           </div>
           <hr />
           <form onSubmit={submitOrderHandler}>

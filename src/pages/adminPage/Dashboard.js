@@ -12,11 +12,14 @@ const Dashboard = () => {
     document.title = "Dashboard";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <DashboardMenu token={authCtx.token} isAuth={authCtx.isAuth} />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && authCtx.isAdmin ? (
+      <DashboardMenu token={authCtx.token} isAuth={authCtx.isAuth} />
+    ) : null;
+
+  if (!authCtx.isAuth || !authCtx.isAdmin) {
+    history.push("/");
+  }
   return pageHandle;
 };
 

@@ -5,7 +5,7 @@ import AddProductForm from "./AddProductForm";
 import Loading from "../../../layout/loading/Loading";
 import config from "../../../../config";
 
-const EditProductPage = () => {
+const EditProductPage = (props) => {
   const [inputNamaEdit, setInputNamaEdit] = useState("");
   const [inputHargaEdit, setInputHargaEdit] = useState("");
   const [inputImageUrlEdit, setInputImageUrlEdit] = useState("");
@@ -88,6 +88,7 @@ const EditProductPage = () => {
               editStokInputHandler={editStokInputHandler}
               editDeskripsiInputHandler={editDeskripsiInputHandler}
               params={Id}
+              token={props.token}
             />
           )}
         </div>

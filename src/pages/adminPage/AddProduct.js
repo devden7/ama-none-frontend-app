@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import AddProductPage from "../../components/akun/admin/products/AddProductPage";
 import AuthContext from "../../store/auth-context";
 
-const AddProduct = (props) => {
+const AddProduct = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
 
@@ -12,11 +12,14 @@ const AddProduct = (props) => {
     document.title = "Tambahkan Product";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <AddProductPage token={authCtx.token} isAuth={authCtx.isAuth} />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && authCtx.isAdmin ? (
+      <AddProductPage token={authCtx.token} isAuth={authCtx.isAuth} />
+    ) : null;
+
+  if (!authCtx.isAuth || !authCtx.isAdmin) {
+    history.push("/");
+  }
   return pageHandle;
 };
 

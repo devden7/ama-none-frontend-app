@@ -12,11 +12,12 @@ const Pengiriman = () => {
     document.title = "Pengiriman";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <PengirimanMenu />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && !authCtx.isAdmin ? <PengirimanMenu /> : null;
+
+  if (!authCtx.isAuth || authCtx.isAdmin) {
+    history.push("/");
+  }
   return pageHandle;
 };
 

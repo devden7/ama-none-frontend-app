@@ -129,6 +129,7 @@ const FormReview = (props) => {
 
     const ambilAngkaReview = userOptionValue.split(" ")[0];
     const dataInput = {
+      orderId: props.orderId,
       rating: +ambilAngkaReview,
       review: inputUserReview,
     };
@@ -136,19 +137,18 @@ const FormReview = (props) => {
     props.submitButtonReview(props.id, dataInput);
     hitory.push(`/riwayatorder`);
   };
-
   return (
     <div
       className={`w-full  transition-all ${
-        !props.review ? "duration-100" : "duration-200"
+        !props.isReview ? "duration-100" : "duration-200"
       } ${
         props.isOpen
-          ? `${!props.review ? "h-37" : "h-32"} visible`
+          ? `${!props.isReview ? "h-37" : "h-32"} visible`
           : "h-0 opacity-0 collapse"
       }`}
     >
       <h4 className="text-2xl font-bold text-slate-900 mb-3">Masukan Review</h4>
-      {!props.review ? (
+      {!props.isReview ? (
         <form onSubmit={submitHandler}>
           <label htmlFor="review" className="block mb-3">
             Rating
@@ -179,13 +179,13 @@ const FormReview = (props) => {
         </form>
       ) : (
         <div>
-          <p>{props.review.accountInfo.tanggal}</p>
-          {props.review.accountInfo.rating === 1 && ratingBintangSatu}
-          {props.review.accountInfo.rating === 2 && ratingBintangDua}
-          {props.review.accountInfo.rating === 3 && ratingBintangTiga}
-          {props.review.accountInfo.rating === 4 && ratingBintangEmpat}
-          {props.review.accountInfo.rating === 5 && ratingBintangLima}
-          <p>{props.review.accountInfo.review}</p>
+          <p>{props.review.tanggalReview}</p>
+          {props.review.rating === 1 && ratingBintangSatu}
+          {props.review.rating === 2 && ratingBintangDua}
+          {props.review.rating === 3 && ratingBintangTiga}
+          {props.review.rating === 4 && ratingBintangEmpat}
+          {props.review.rating === 5 && ratingBintangLima}
+          <p>{props.review.review}</p>
         </div>
       )}
     </div>

@@ -23,6 +23,8 @@ const SideBarProduct = (props) => {
       imageUrl: props.imageUrl,
       quantityItem: 1,
       kategori: props.kategori,
+      isReview: null,
+      review: {},
     });
   };
 

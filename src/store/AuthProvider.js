@@ -8,7 +8,11 @@ const AuthProvider = (props) => {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(
+    localStorage.getItem("auth")
+      ? JSON.parse(localStorage.getItem("auth")).token
+      : null
+  );
   const [isAuth, setIsAuth] = useState(
     localStorage.getItem("auth")
       ? JSON.parse(localStorage.getItem("auth")).isAuth
@@ -126,6 +130,7 @@ const AuthProvider = (props) => {
     userId,
     userName,
     userEmail,
+    role,
     token,
     isAuth,
     isAdmin,

@@ -3,112 +3,21 @@ import { Fragment, useState } from "react";
 import FormReview from "./FormReview";
 const OrderDetailItem = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [ratingBintangSatu, setRatingBintangSatu] = useState(
-    <div className="flex  items-center mb-2">
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-    </div>
-  );
 
-  const [ratingBintangDua, setRatingBintangDua] = useState(
-    <div className="flex  items-center mb-2">
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-    </div>
-  );
+  const angkaToRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
 
-  const [ratingBintangTiga, setRatingBintangTiga] = useState(
-    <div className="flex  items-center mb-2">
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-    </div>
-  );
+    currencyDisplay: "code",
+  })
+    .format(props.harga)
+    .replace("IDR", " ")
+    .trim();
 
-  const [ratingBintangEmpat, setRatingBintangEmpat] = useState(
-    <div className="flex  items-center mb-2">
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-outline"></ion-icon>
-      </span>
-    </div>
-  );
-
-  const [ratingBintangLima, setRatingBintangLima] = useState(
-    <div className="flex  items-center mb-2">
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-      <span className="text-yellow-400">
-        <ion-icon name="star-sharp"></ion-icon>
-      </span>
-    </div>
-  );
   const reviewFormHandler = () => {
     setIsOpen(!isOpen);
   };
-
-  const reviewItemIndex = props.review.findIndex(
-    (rev) => rev.accountInfo.prodId === props.id
-  );
 
   return (
     <Fragment>
@@ -117,14 +26,14 @@ const OrderDetailItem = (props) => {
           <img src={props.imageUrl} alt={props.nama} />
         </div>
         <p>{props.nama}</p>
-        <p>{props.harga}</p>
+        <p>Rp {angkaToRupiah}</p>
         <div className="flex items-center gap-4">
           <p>{props.quantityItem}</p>
         </div>
 
         {props.statusOrder === "Berhasil Dikirim" && (
           <div onClick={reviewFormHandler} className="flex items-center gap-2">
-            {!props.review[reviewItemIndex] ? (
+            {!props.isReview ? (
               <button>Beri Review</button>
             ) : (
               <button>Penilaian Kamu</button>
@@ -136,9 +45,12 @@ const OrderDetailItem = (props) => {
         <FormReview
           isOpen={isOpen}
           submitButtonReview={props.submitButtonReview}
+          orderId={props.orderId}
           id={props.id}
+          userName={props.userName}
           nama={props.nama}
-          review={props.review[reviewItemIndex]}
+          review={props.review}
+          isReview={props.isReview}
         />
       </li>
     </Fragment>

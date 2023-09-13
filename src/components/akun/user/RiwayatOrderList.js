@@ -24,7 +24,7 @@ const RiwayatOrderlist = (props) => {
             key={order._id}
             id={order._id}
             getIdOrder={handleGetId.bind(null, order._id)}
-            tanggal={order.detailOrderan.tanggal}
+            tanggal={order.detailOrderan.tanggalOrder}
             total={order.detailOrderan.totalBelanja}
             pembayaran={order.detailOrderan.pembayaran}
           />

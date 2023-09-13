@@ -1,12 +1,23 @@
 import { Fragment } from "react";
 
 const RiwayatOrderItem = (props) => {
+  const angkaToRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+
+    currencyDisplay: "code",
+  })
+    .format(props.total)
+    .replace("IDR", " ")
+    .trim();
+
   return (
     <Fragment>
       <tr className="border-b-[1px] border-solid border-slate-300 m-3">
         <td className="pr-2">{props.id}</td>
         <td className="pr-2">{props.tanggal}</td>
-        <td className="pr-2">{props.total}</td>
+        <td className="pr-2">Rp {angkaToRupiah}</td>
         <td className="pr-2">{props.pembayaran}</td>
         <td className="pr-2">
           <button

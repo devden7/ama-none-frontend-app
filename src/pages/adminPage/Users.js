@@ -12,11 +12,15 @@ const Users = () => {
     document.title = "Users List";
   }, []);
 
-  const pageHandle = authCtx.isAuth ? (
-    <AdminUsers token={authCtx.token} isAuth={authCtx.isAuth} />
-  ) : (
-    history.push("/login")
-  );
+  const pageHandle =
+    authCtx.isAuth && authCtx.isAdmin ? (
+      <AdminUsers token={authCtx.token} isAuth={authCtx.isAuth} />
+    ) : null;
+
+  if (!authCtx.isAuth || !authCtx.isAdmin) {
+    history.push("/");
+  }
+
   return pageHandle;
 };
 

@@ -48,12 +48,6 @@ const AuthProvider = (props) => {
       setErrorMessage(data.message);
     }
 
-    // setToken(data.detailInfo.token);
-    // setUserId(data.detailInfo.userId);
-    // setUserName(data.detailInfo.userName);
-    // setUserEmail(data.detailInfo.email);
-    // setRole(data.detailInfo.role);
-
     localStorage.setItem(
       "auth",
       JSON.stringify({

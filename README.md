@@ -1,9 +1,9 @@
 # About the Application
-To log in to your admin account you can use:
+To log in to your admin account you can use 
 Email: admin@admin.com
 Password: 123456
 
-To log in, you can create your own, or you can also use this dummy account:
+To log in, you can create your own, or you can also use this dummy account 
 Email: test1@test.com
 Password: 123456
 

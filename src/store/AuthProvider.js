@@ -68,6 +68,27 @@ const AuthProvider = (props) => {
     history.push("/");
   };
 
+  const initUserData = async () => {
+    if (token !== null) {
+      try {
+        const response = await fetch(`${config.urlApi}get-user-account`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+
+        if (response.status !== 200) {
+          console.log(data.message);
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   useEffect(() => {
     const authStorage = JSON.parse(localStorage.getItem("auth"));
     if (authStorage !== null || token !== null) {
@@ -76,8 +97,8 @@ const AuthProvider = (props) => {
       setUserName(authStorage.userName);
       setUserEmail(authStorage.userEmail);
       setRole(authStorage.role);
-
       setIsAuth(authStorage.isAuth);
+      initUserData();
     }
   }, [isAuth, token]);
 

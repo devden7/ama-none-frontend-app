@@ -12,11 +12,7 @@ const Cart = () => {
     document.title = "Cart";
   }, []);
 
-  const pageHandle = authCtx.role === "users" ? <CartMenu /> : null;
-
-  // if (authCtx.role === "admin") {
-  //   history.push("/");
-  // }
+  const pageHandle = authCtx.role !== "admin" ? <CartMenu /> : null;
 
   return pageHandle;
 };

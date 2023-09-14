@@ -73,6 +73,7 @@ const CartProvider = (props) => {
         body: JSON.stringify(item),
       });
       if (response.status !== 201) {
+        history.push("/cart");
         return;
       }
     } catch (err) {

@@ -7,6 +7,13 @@ const ProductPencarianItem = (props) => {
 
   const authCtx = useContext(AuthContext);
   const judulUntukLink = urlProduct.replace(" ", "-");
+
+  const angkaToRupiah = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(props.product.harga);
+
   const addToCartHandler = () => {
     props.addToCart({
       id: props.id,
@@ -19,6 +26,7 @@ const ProductPencarianItem = (props) => {
       review: {},
     });
   };
+
   return (
     <Fragment>
       <div className="mb-10 border-solid border-[1px] border-slate-300 text-slate-900 rounded-xl  sm:w-64 sm:mb-0  xl:w-72 md:w-52 overflow-hidden">
@@ -97,10 +105,7 @@ const ProductPencarianItem = (props) => {
                 <span> </span>review
               </p>
             </div>
-            <p className="text-xl font-bold">
-              <span className="text-sm">Rp</span>
-              {props.product.harga}
-            </p>
+            <p className="text-xl font-bold">{angkaToRupiah}</p>
             {!authCtx.isAdmin &&
               (props.product.stok > 0 ? (
                 <button
